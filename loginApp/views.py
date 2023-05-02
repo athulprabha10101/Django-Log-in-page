@@ -9,7 +9,6 @@ from django.views.decorators.cache import never_cache
 
 @never_cache
 def login_user(request):
-    print("In logn 8888888888")
     if 'username' in request.session:
         return redirect(home)
     if request.method == "POST":
