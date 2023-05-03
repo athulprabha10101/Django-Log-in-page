@@ -2,7 +2,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
+
 # Create your views here.
 
 
@@ -22,14 +24,13 @@ def login_user(request):
         else:
             print("Invalid credentials")
     return render(request, 'login.html')
-
 @never_cache
+@login_required(login_url='login/')
 def home(request):
-    if request.user.is_authenticated:
         return render(request, 'home.html')
-    return redirect(login_user)
 
-@never_cache
+
+@login_required(login_url='login/')
 def user_logout(request):
     if request.user.is_authenticated:
         logout(request)
